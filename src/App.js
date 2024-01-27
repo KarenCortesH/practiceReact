@@ -1,24 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Link, Navigate, Outlet, Route, Routes, redirect, useNavigate, useParams } from "react-router-dom";
+
+let NotImpemented = () => {
+  <Link to="/videos"> Ir a videos</Link>
+  return <h1>Esta pagina aun no esta lista</h1>
+
+}
+
+// let videoShow = () => {
+//   //const { id } = useParams();
+//   console.log(id);
+//   return (
+//     <p>{id}</p>
+//   )
+// }
+
+let UsersOutlet = () => {
+  let navigate = useNavigate();
+  let redirect = () => {
+    navigate('/');
+  }
+  return (
+    <>
+      <button onClick={redirect}> Ir al Home</button>
+      <Outlet />
+    </>
+  )
+}
 
 function App() {
+  const isAuth = true;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<NotImpemented />}></Route>
+
+        <Route path="/users" element={isAuth ? <Navigate to='/' /> : <UsersOutlet />}>
+          <Route path="registre" element={<NotImpemented />}></Route>
+          <Route path="login" element={<NotImpemented />}></Route>
+          <Route path=":id" element={<NotImpemented />}></Route>
+          <Route path=":id/videos" element={<NotImpemented />}></Route>
+        </Route>
+
+        <Route path="/videos">
+          <Route path="/videos" element={<NotImpemented />}></Route>
+          <Route path="new" element={<NotImpemented />}></Route>
+          <Route path=":id" element={<NotImpemented />}></Route>
+        </Route>
+
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
